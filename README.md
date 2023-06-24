@@ -2,7 +2,7 @@
 Introducing our revolutionary merchant onboarding app, kris+ Connect, designed to seamlessly scale your business across multiple countries, manage your promotional offers, allowing customers to enjoy rewards while adhering to regulatory requirements. 
 
 
-## Getting Started
+### Getting Started
 
 Clone the repo and run the development server:
 
