@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
+import Link from "next/link"
 import firebase_app from "../firebase/config";
 import { getFirestore, doc, getDoc, getDocs, collection } from "firebase/firestore";
 import React from 'react';
@@ -21,9 +22,12 @@ export default function Home() {
 
   }
 
+
+
   useEffect(() => {
     getAllMerchantsData();
   }, [])
+
 
 
 
@@ -37,28 +41,27 @@ export default function Home() {
       {
           merchantsData.map((item) => {
             console.log(item);
-            return <div className='w-full border-2 border-white rounded-lg p-5 my-5'>
+            var date = item.createdAt.toDate().toDateString();
+            return <div className='w-full border-2 border-white rounded-lg p-5 my-3'>
             <div className='flex justify-between'>
               <div className='flex flex-col'>
-                <span className='text-gray-200 font-light text-sm'>{item.docID}</span>
-                <span className='text-white font-light'>Merchant Name: {item.merchantName}</span>
-                <span className='text-white font-light'>Merchant Registerd Email: {item.merchantEmail}</span>
-                <span className='text-white font-light'>Merchant ID: {item.merchantID}</span>
-                <span className='text-white font-light'>Location: {item.merchantLocation}</span>
-                <span className='text-white font-light'>Entity Name: {item.entityName}</span>
-                <span className='text-white font-light'>Entity Registration Number: {item.entityNumber}</span>
-                <span className='text-white font-light'>Entity Address: {item.entityAddress}</span>
-                <span className='text-white font-light'>Entity Type: {item.entityType}</span>
+                <span className='text-gray-400 font-light text-sm'>{item.docID}</span>
+                <span className='text-white font-light text-lg'>Merchant Name: {item.merchantName}</span>
+                <span className='text-white font-light text-lg'>Entity Name: {item.entityName}</span>
+                <span className='text-white font-light text-lg'>Date: {date}</span>
+                
               </div>
     
               <div className='flex flex-col'>
-                <span className='text-gray-200 font-light text-sm'>Date: {item.createdAt}</span>
-                <div className='mt-auto'>
-                  <h1 className='font-bold'>Status: Under Review</h1>
-                  <div>
-                    <button className='bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded'>Reject</button>
-                    &nbsp;
-                    <button className='bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded'>Approve</button>
+                
+                
+                  {
+                    item.isVerified == false ? <span className='font-bold text-orange-300'>Status: Under Review</span> : <span className='font-bold text-green-700'>Status: Approved</span>
+                  }
+                <div className='mt-auto flex'>
+                  <div className='ml-auto'>
+                    <Link href={`/merchantPage/${item.docID}/${item.entityNumber}`}><button className='text-white border-2 border-white font-bold py-1 px-4 rounded hover:bg-white hover:text-black'>View -&gt;</button></Link>
+                    
                   </div>
                 </div>
               </div>
